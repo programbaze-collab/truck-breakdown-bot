@@ -72,6 +72,11 @@ alter table drivers        enable row level security;
 alter table requests       enable row level security;
 alter table request_photos enable row level security;
 
+-- явные права для серверного ключа: работает, даже если при создании проекта
+-- не была отмечена опция "Grant API access to new tables automatically"
+grant usage on schema public to service_role;
+grant select, insert, update, delete on drivers, requests, request_photos to service_role;
+
 -- публичный бакет для фото (ссылки открываются диспетчером без авторизации)
 insert into storage.buckets (id, name, public)
 values ('breakdown-photos', 'breakdown-photos', true)
