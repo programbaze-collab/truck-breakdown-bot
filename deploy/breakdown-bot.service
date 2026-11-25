@@ -1,0 +1,18 @@
+# Пользовательский сервис systemd. Путь к проекту: ~/breakdown-bot (поправьте, если другой).
+# Установка: см. README, раздел «Как развернуть с нуля».
+[Unit]
+Description=Telegram bot for truck breakdown requests
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=%h/breakdown-bot
+ExecStart=%h/breakdown-bot/.venv/bin/python -m bot.main
+Restart=always
+RestartSec=10
+Environment=PYTHONUNBUFFERED=1
+StandardOutput=append:%h/breakdown-bot/bot.log
+StandardError=append:%h/breakdown-bot/bot.log
+
+[Install]
+WantedBy=default.target
