@@ -26,7 +26,8 @@ def load_config() -> Config:
         dispatcher_chat_id=int(os.environ["DISPATCHER_CHAT_ID"]),
         openai_api_key=os.environ["OPENAI_API_KEY"],
         openai_model=os.getenv("OPENAI_MODEL") or "gpt-4o-mini",
-        supabase_url=os.environ["SUPABASE_URL"].rstrip("/"),
+        # частая ошибка: копируют адрес REST API вместо адреса проекта
+        supabase_url=os.environ["SUPABASE_URL"].rstrip("/").removesuffix("/rest/v1"),
         supabase_key=os.environ["SUPABASE_SERVICE_KEY"],
         supabase_bucket=os.getenv("SUPABASE_BUCKET") or "breakdown-photos",
     )
